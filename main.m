@@ -2,6 +2,7 @@
 
 filename = '/T5.wav';
 [y,Fs] = audioread(filename);
+soundsc(y,Fs)
 L = size(y);
 T = 1/Fs;
 
@@ -10,13 +11,16 @@ fprintf('Frecuencia de muestreo: %d\n', Fs);
 fprintf('Tiempo entre muestras : %d\n', T);
 t = 0:T:((L-1)*T);
 
+
 hold on
-title('Amplitud de la senal en el tiempo');
+subplot(2,1,1);
+plot(t,y);
+title('Amplitud de la se?al en el tiempo');
 xlabel('Tiempo [s]');
 ylabel('Amplitud [V]');
-%plot(t,y);
 
 
+subplot(2,1,2);
 F = fft(y);
 P2 = abs(F/L(1));
 P1 = P2(1:L(1)/2+1);
