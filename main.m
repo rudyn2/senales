@@ -5,7 +5,7 @@ filename = '/T5.wav';
 soundsc(y,Fs)
 L = size(y);
 T = 1/Fs;
-
+%wena tonto shushetumare te voy a romper el ojete cmo a tu vieja
 
 fprintf('Frecuencia de muestreo: %d\n', Fs);
 fprintf('Tiempo entre muestras : %d\n', T);
