@@ -6,6 +6,7 @@ soundsc(y,Fs)
 L = size(y);
 T = 1/Fs;
 %wena tonto shushetumare te voy a romper el ojete cmo a tu vieja
+% sapo tonto y la rectm te voy a hacer cagar 
 
 fprintf('Frecuencia de muestreo: %d\n', Fs);
 fprintf('Tiempo entre muestras : %d\n', T);
