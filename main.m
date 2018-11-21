@@ -2,12 +2,12 @@
 
 filename = '/T5.wav';
 [y,Fs] = audioread(filename);
+nfft = 8192;
 soundsc(y,Fs)
 L = size(y);
 T = 1/Fs;
-%wena tonto shushetumare te voy a romper el ojete cmo a tu vieja
-% sapo tonto y la rectm te voy a hacer cagar 
-%q we a sapo y la maraca
+
+
 fprintf('Frecuencia de muestreo: %d\n', Fs);
 fprintf('Tiempo entre muestras : %d\n', T);
 t = 0:T:((L-1)*T);
@@ -22,16 +22,15 @@ ylabel('Amplitud [V]');
 
 
 subplot(2,1,2);
-F = fft(y);
-P2 = abs(F/L(1));
-P1 = P2(1:L(1)/2+1);
-P1(2:end-1) = 2*P1(2:end-1);
-f = Fs*(0:(L(1)/2))/L(1);
-plot(f,P1) 
-title('Single-Sided Amplitude Spectrum of X(t)')
-xlabel('f (Hz)')
-ylabel('|P1(f)|')
-
+Y=fft(y,nfft);
+% tomar la FFT, y llenando con ceros, de manera que el largo de la FFT sea nfft
+Y = Y(1:nfft/2); 
+% la FFT es sim?trica, as? que se tira la mitad
+my = abs(Y).^2;
+% tomar la  potencia espectral, m?dulo alcuadrado de la FFT
+f = (0:nfft/2-1)*Fs/nfft; 
+%construccion del vector de frecuencias
+plot(f,my);
 
 
 
