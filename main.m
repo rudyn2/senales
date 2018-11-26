@@ -66,20 +66,17 @@ my = abs(Y).^2;
 f = (0:nfft/2-1)*Fs/nfft; 
 plot(f,my);
 
-% Senal modulada
-size(p)
-size(y)
+% Senal modulada: s
 s = p'.*y;
-size(s)
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
 figure();
-subplot(2,1,1);
+subplot(3,1,1);
 title('Senal portadora en funcion del tiempo');
 plot(t,s);
 
-subplot(2,1,2);
+subplot(3,1,2);
 Y=fft(s,nfft);
 Y2 = fftshift(Y);
 Y = Y(1:nfft/2); 
@@ -88,16 +85,28 @@ f = (0:nfft/2-1)*Fs/nfft;
 f2 = (-nfft/2:nfft/2-1)*Fs/nfft;
 plot(f2,abs(Y2).^2);
 
+subplot(3,1,3);
+plot(f, abs(Y2(4000:end-1,1)).^2);
 
-% Parte 3: Demodule la se?al de la parte 2. Grafique en tiempo y
+
+
+% Parte 3: Demodule la se?al de la psarte 2. Grafique en tiempo y
 % frecuencia. Escuche y compare la se?al obtenida con la original.
 
 % Primero la modulada se multiplica por un coseno
-
+figure();
+hold on
+title('Senal demodulada en funcion del tiempo');
+xlabel('Tiempo [s]');
+ylabel('Amplitud');
+d = s'.*p;
+[b, a] = butter(40, 2*1200/Fs);
+demodulada = filter(b,a,d);
+plot(t,demodulada);
 
 % Restricciones:
 %   Utilizar la misma frecuencia de modulaci?n.
-%   La atenuaci?n no debe ser menor a 30 dB. Las p?rdidas en la banda
+%   La atenuaci?n no debe ser menor a 30 dB. Las perdidas en la banda
 %   de paso no pueden ser mayores a 1 dB. Considere que la se?al se
 %   encuentra contenida en la bada de 2 kHz y que la frecuencia de corte se
 %   encuentra en +-1.2 kHz (con respecto a la frecuencia central).
