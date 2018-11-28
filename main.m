@@ -50,9 +50,6 @@ title('Espectro de Fourier de senal filtrada');
 xlabel('Tiempo [s]');
 ylabel('Amplitud');
 
-% Parte 2: Obtenga y grafique la senal portadora en tiempo y frecuencia,
-% recuerde que se desea desplazar la senal a 3 kHz.
-
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
@@ -68,7 +65,6 @@ ylabel('Amplitud');
 
 
 % Fourier portadora
-
 subplot(2,1,2);
 Y=fft(p,nfft);
 Y = Y(1:nfft/2); 
@@ -84,8 +80,6 @@ hold off;
 s = p'.*y;
 fprintf('Program paused. Press enter to continue.\n');
 pause;
-
-%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 figure();
@@ -111,32 +105,33 @@ ylabel('Potencia');
 
 subplot(3,1,3);
 plot(f, abs(Y2(4000:end-1,1)).^2);
-title('Espectro de fourier positivo de seal modulada');
+title('Espectro de fourier positivo de senal modulada');
 xlabel('Frecuencia [Hz]');
 ylabel('Potencia');
-
-
-% Parte 3: Demodule la se?al de la psarte 2. Grafique en tiempo y
-% frecuencia. Escuche y compare la se?al obtenida con la original.
-
-% Primero la modulada se multiplica por un coseno
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
 figure();
+
+
 d = s'.*p;
+Wp = 2*1200/Fs; Ws = 2*1400/Fs;
+[n, Wn] = buttord(Wp,Ws,1,30);
 [b, a] = butter(40, 2*1200/Fs);
 demodulada = filter(b,a,d);
+
+subplot(2,1,1);
+soundsc(demodulada,Fs);
 plot(t,demodulada);
 title('Senal demodulada en funcion del tiempo');
 xlabel('Tiempo [s]');
 ylabel('Amplitud');
 
-
-% Restricciones:
-%   Utilizar la misma frecuencia de modulaci?n.
-%   La atenuaci?n no debe ser menor a 30 dB. Las perdidas en la banda
-%   de paso no pueden ser mayores a 1 dB. Considere que la se?al se
-%   encuentra contenida en la bada de 2 kHz y que la frecuencia de corte se
-%   encuentra en +-1.2 kHz (con respecto a la frecuencia central).
+subplot(2,1,2);
+Y3 = fft(demodulada,nfft);
+Y3 = Y3(1:nfft/2); 
+plot(f, abs(Y3).^2);
+title('Espectro de fourier de la senal demodulada');
+xlabel('Frecuencia [Hz]');
+ylabel('Potencia');
